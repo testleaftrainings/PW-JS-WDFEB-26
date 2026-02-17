@@ -1,0 +1,57 @@
+Week1 Notes :
+
+
+Java (Multi-threaded)
+Client
+ ├─ Thread-1 → Request 1
+ ├─ Thread-2 → Request 2
+ └─ Thread-3 → Request 3
+
+
+All at the same time.
+
+JavaScript (Single-threaded)
+Client (1 thread)
+ → Request 1
+ → Request 2
+ → Request 3
+
+---------------------
+
+Explanation for Node.js 
+
+Browser
+
+Browser is like a car with an engine already fitted inside.
+You can just sit and drive (write JS in console).
+
+VS Code + Node.js
+
+VS Code is like an empty car body (garage).
+Node.js is the engine you install to make it run.
+
+So final line:
+
+To run JavaScript outside the browser, we install the engine (Node.js) into our own vehicle (VS Code).
+---------------------------
+
+Browser comes with an engine by default.
+For VS Code, we bring our own engine using Node.js.
+
+---------------------------------
+
+
+Datatypes :
+
+/* BigInt
+- (2^53 - 1) to (2^53 - 1)
+
+This range is:
+-9007199254740991 to 9007199254740991
+
+If you go beyond this range — like using:
+
+let num = 9007199254740992;
+
+JavaScript *can't guarantee accuracy, and you'll get the ts(80008) warning in TypeScript because the value might be **rounded, **inaccurate, or **unexpected*.
+
