@@ -1,0 +1,74 @@
+
+📑 Agenda for Week1 Day03 : Understanding JavaScript - Core Concepts                
+🎯 Focus: Behaviour of variable declaration in JS, Functions
+
+Classroom Activity - Using scopes and hoisting in JavaScript to understand variable declarations and function behavior.
+
+
+
+Variable Declarations in JavaScript:
+
+- JavaScript has three ways to declare variables: `var`, `let`, and `const
+
+- `var` is function-scoped and can be re-declared and updated. It is hoisted to the top of its scope, but only the declaration is hoisted, not the initialization.
+- `let` is block-scoped and can be updated but not re-declared within the same scope. It is also hoisted, but it is not initialized until its definition is evaluated, which means it cannot be accessed before declaration (Temporal Dead Zone).
+- `const` is block-scoped and cannot be updated or re-declared. Like `let`, it is hoisted but not initialized until its definition is evaluated.
+
+------------------------------------------
+
+functions in JavaScript:
+- Functions in JavaScript can be declared in several ways: function declarations, function expressions, and arrow functions.
+- Function declarations are hoisted, meaning you can call the function before its declaration in the code
+
+Example of Function Declaration Hoisting:
+
+greet(); // Output: "Hello, World!"
+function greet() {
+  console.log("Hello, World!");
+}
+
+------------------------------------------
+
+Hoisting in JavaScript:
+- Hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their containing scope during the compilation phase.
+- This means that you can use variables and functions before they are declared in the code.
+Example of Hoisting with Variables:
+
+console.log(x); // Output: undefined
+var x = 5;
+
+------------------------------------------
+
+Scoping in JavaScript:
+- JavaScript has function scope and block scope. Variables declared with `var` are function-scoped, while variables declared with `let` and `const` are block-scoped.
+- This means that variables declared with `var` are accessible throughout the entire function, while variables declared with `let` and `const` are only accessible within the block they are defined in.
+
+Example of Scoping:
+
+function example() {
+  if (true) {
+    var functionScoped = "I am function scoped";
+    let blockScoped = "I am block scoped";
+  }
+  console.log(functionScoped); // Output: "I am function scoped"
+  console.log(blockScoped); // ReferenceError: blockScoped is not defined
+}
+
+------------------------------------------
+
+
+Naming conventions in JavaScript followed but not strictly adhered :
+------------------------------------------------------------------
+
+
+Variables -->	camelCase	
+let userName
+
+Functions --> camelCase	
+function getData()
+
+Object Properties-->	camelCase	
+user.firstName
+
+Classes / Constructors -->	PascalCase	
+class UserProfile
