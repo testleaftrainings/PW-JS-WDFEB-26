@@ -1,0 +1,147 @@
+📑 Agenda for Week2 Day1 - Strings and Function Types in JavaScript
+ 
+📆 Date: 23 February [Monday]
+ 
+🕝 Session Highlights
+
+ Recap 
+- Key takeaways from the previous session:  
+Introduction to JavaScript, Mastering Variables, Operators, Conditional Statements&Loops,
+
+1. String
+* Exploring Methods and Real-world Use Cases
+* [Practice] Solve String-based Problems
+
+2. Functions
+* Different types of functions -> Named function, Function Expression/ Anonyuomus Function, Arrow Function, Call back function
+
+
+🕡 Wrap Up / Q&A 
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+
+Notes :
+------
+
+
+let course = "Playwright"
+
+ | Index | Negative Index | Length
+P -  0        -10             1
+l -  1        -9              2
+a -  2        -8              3
+y -  3        -7              4
+w -  4        -6              5
+r -  5        -5              6
+i -  6        -4              7
+g -  7        -3              8
+h -  8        -2              9
+t -  9        -1             10
+
+-----------------------------------------------------
+
+Difference between slice() and substring()
+
+
+| Feature           | `slice()`                 | `substring()`         |
+| ----------------- | ------------------------- | --------------------- |
+| Start Index       | Included                  | Included              |
+| End Index         | Not included              | Not included          |
+| If `start > end`  | Returns empty string `""` | Swaps the values      |
+| Negative Index    | Allowed                   | Not allowed           |
+| Negative Handling | Counts from end           | Treated as `0`        |
+| Swapping          | ❌ Does NOT swap           | ✅ Swaps automatically |
+| Common Use        | Modern & flexible         | Older method          |
+
+
+-----------------------------------------------
+
+1️⃣ includes() ⭐ 
+
+Checks if a string contains a value.
+
+let course = "Playwright";
+
+console.log(course.includes("wright")); // true
+console.log(course.includes("Java"));   // false
+
+
+👉 Used in:
+
+Validation
+
+API response checks
+
+UI text verification
+
+2️⃣ startsWith() & endsWith()
+console.log(course.startsWith("Play"));  // true
+console.log(course.endsWith("right"));   // true
+
+
+👉 Very useful in test automation assertions.
+
+3️⃣ toUpperCase() / toLowerCase() 
+let name = "PlayWright";
+
+console.log(name.toLowerCase()); // playwright
+console.log(name.toUpperCase()); // PLAYWRIGHT
+
+
+👉 Used for case-insensitive comparison.
+
+4️⃣ trim() / trimStart() / trimEnd() ⭐
+
+Very important for real projects.
+
+let userInput = "   Ravi   ";
+
+console.log(userInput.trim());      // "Ravi"
+console.log(userInput.trimStart()); // removes leading spaces
+console.log(userInput.trimEnd());   // removes trailing spaces
+
+
+👉 Used when validating form inputs.
+
+5️⃣ replace() ⭐
+
+Very important.
+
+let text = "Playwright is good";
+
+console.log(text.replace("good", "powerful"));
+// Playwright is powerful
+
+
+Important concept:
+
+let str = "test test test";
+console.log(str.replace("test", "run"));     // replaces first only //run test test
+console.log(str.replaceAll("test", "run"));  // replaces all //run run run
+
+6️⃣ split() ⭐ (You already used it in reverse 👍)
+
+But teach it explicitly:
+
+let sentence = "I love Playwright";
+
+console.log(sentence.split(" "));
+// ["I", "love", "Playwright"]
+
+
+👉 Used for:
+
+Parsing CSV
+
+Data extraction
+
+Tokenization
+
+7️⃣ lastIndexOf()
+let str = "Playwright";
+
+console.log(str.lastIndexOf("i")); 
+
+
+Finds last occurrence.
