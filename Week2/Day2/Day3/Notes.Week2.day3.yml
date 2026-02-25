@@ -1,0 +1,201 @@
+📑 Agenda for Week 2 Day 3 - Using CSS Selector in Playwright 
+🎯 [ Focus: Mastering Locators for Precise Automation ]  
+
+📆 Date: 25 February [Wednesday]  
+
+🕝 Session Highlights
+
+ Recap  
+* Key Takeaways from Week2 Day 2
+
+1. Callback function
+* Learn how callback function work in JavaScript.
+
+2. Walk through of config file 
+* Understanding playwright.config.ts
+* Setting up test environments and browsers.
+
+3. Understanding the DOM
+* What is the DOM and How It Works 
+
+4. CSS Selectors   
+* Basic and Advanced CSS Selector Techniques.  
+* Hands-on Example: Using ID, Class, and Attribute Selectors.
+
+🕡 Wrap Up / Q&A 
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+---------------------------------------------------------------------
+
+Playwright locator methods :
+----------------------------
+
+nth(), first(), and last() are Playwright Locator API methods.
+
+They help you choose which element to act on when a locator matches multiple elements.
+
+
+------------------------------------------------------------------------
+
+
+What is a callback function?
+
+A callback is just a function you give to another function, and you are telling it:
+
+👉 “When you finish your work, call this function back.”
+
+That’s it!
+
+Simple Example (Real Life)
+
+Ordering Pizza
+
+You call a pizza shop and tell them:
+
+“Here is my number.
+When the pizza is ready, call me back.”
+
+You don’t wait on the phone.
+You go do your own work.
+
+Later, the pizza shop finishes making your pizza → they call you back.
+
+That phone call = callback.
+
+💻 Same Logic in JavaScript
+
+function makePizza(callback) {
+
+    console.log("Making pizza...");
+
+    setTimeout(() => {
+        console.log("Pizza ready!");
+        callback(); // calling back
+    }, 2000);
+
+}
+
+makePizza(() => {
+    console.log("Eat the pizza!");
+});
+
+What’s happening?
+
+You give a function → () => { console.log("Eat the pizza!"); }
+
+makePizza() does its work.
+
+When it's finished, it calls your function back.
+
+*** Why do we use callbacks?
+
+Because some tasks take time:
+
+✔ Reading files
+✔ Calling APIs
+✔ Waiting for user input
+✔ Waiting for timers
+
+Instead of blocking everything, JS says:
+
+“Give me a function, I’ll call you back when I’m done.”
+
+***Simple one-line definition
+
+A callback is a function passed to another function so it can run later.
+
+********************************************************************************
+
+How Youtube Search Works (Using Callbacks):
+
+## YOUTUBE CALLBACK EXAMPLE – COMPLETE CODE
+
+javascript
+function playVideo(user, video, onSaveHistory, onShowRecommendations) {
+    console.log(user + " is watching: " + video);
+
+    // Calling callback functions
+    onSaveHistory(user, video);
+    onShowRecommendations(video);
+}
+
+// Callback 1
+function saveHistory(user, video) {
+    console.log("Video saved to history for user:", user);
+}
+
+// Callback 2
+function showRecommendations(video) {
+    console.log("Showing recommended videos related to:", video);
+}
+
+// Function Call
+playVideo("Arun", "JavaScript Basics", saveHistory, showRecommendations);
+
+
+---
+
+## EXPECTED OUTPUT
+
+Arun is watching: JavaScript Basics
+Video saved to history for user: Arun
+Showing recommended videos related to: JavaScript Basics
+
+---
+
+## Explanation :
+
+playVideo() is the main YouTube action.
+saveHistory() and showRecommendations() are callback functions passed as arguments and executed inside playVideo().
+
+---
+
+If you want real-world style (with server delay simulation), here is async version.
+
+---
+
+## YOUTUBE REALISTIC (ASYNC) VERSION
+
+javascript
+function playVideo(user, video, callback) {
+    console.log(user + " clicked play on: " + video);
+
+    // Simulating server delay (like fetching video stream)
+    setTimeout(function () {
+        console.log("Server: Video stream loaded successfully");
+        callback();
+    }, 2000);
+}
+
+function afterVideoStarts() {
+    console.log("Updating UI, tracking analytics, and loading recommendations...");
+}
+
+playVideo("Arun", "JavaScript Basics", afterVideoStarts);
+
+
+---
+
+## OUTPUT (after 2 seconds)
+
+Arun clicked play on: JavaScript Basics
+Server: Video stream loaded successfully
+Updating UI, tracking analytics, and loading recommendations...
+
+---
+
+Summary:
+
+playVideo() = Main YouTube action
+Other features (history, recommendations, analytics) = Callback functions
+Callback means: After this event completes, execute this function.
+
+
+
+
+
+Salesforce id:
+
+dilipkumar.rajendran@testleaf.com
+TestLeaf@2025
