@@ -1,0 +1,60 @@
+📑 Agenda for Week 2 Day 4: Xpath Locators
+🎯 [ Focus: Mastering Locators for Precise Automation ]  
+
+📆 Date: 04 December [Thursday]
+
+
+1. XPath Selectors
+* Relative vs. Absolute XPath: What's Better? 
+* Advanced relative Xpath- Axes  
+* Practical Use Cases with XPath Examples.
+
+------------------------------------------------------------
+
+Notes :
+------
+
+CSS Selectors :
+-------------
+
+text based CSS selectors :
+------------------------
+
+a:has-text('Leads') --> This selector will match any <a> element that contains the text "Leads" anywhere within it. 
+It is useful for selecting elements based on their visible text content, regardless of their position in the DOM.
+
+innerText() --> This is a property that returns the visible text content of an element, including its descendants.
+It is often used in Playwright to retrieve the text content of an element for assertions or to
+
+textContent() --> This is a method that returns the text content of an element, including its descendants.
+It is often used in Playwright to retrieve the text content of an element for assertions or to perform operations based on the text content.
+
+
+---------------------------------------------------------
+Partial attribute values :
+--------------------------
+
+input[name*="USER"] --> contains
+
+[id^="name"] --> starts with
+
+[id$="name"] --> end with 
+
+---------------------------------------------------------
+Absolute Xpath :
+/html/body/div[2]/div[2]/div/form/p/input
+
+
+Relative Xpath :
+
+Two types :
+---------
+
+Basic Relative Xpath :
+
+//tagName[@attribute='attributeValue’] --> attribute based xpath
+//tagName[text()='text value in DOM']  --> text based xpath
+//tagName[contains(@attribute, 'Partial value of the attribute')] --> partial attribute based xpath
+//tagname[contains(text(),' Partial text in my DOM' ')] --> partial text based xpath
+(//tagName[@attribute='attributeValue'])[index] --> collection based xpath
+ 
