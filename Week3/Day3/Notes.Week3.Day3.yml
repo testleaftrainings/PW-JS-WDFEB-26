@@ -1,0 +1,173 @@
+📑 Agenda for Week3Day03: Playwright Locators and TypeScript Key Features 
+ 
+
+🕝 Session Highlights
+
+Recap
+   - Key Takeaways from Week3. 
+
+1. Introduction to TypeScript.
+* What is TypeScript, and Why Use It?  
+* Setting Up a TypeScript Environment.  
+* Basic Syntax and First TypeScript Program.  
+
+2. TypeScript Types  
+* Overview of Types in TypeScript:  
+* Hands-on: Declaring Variables with Different Types.  
+
+3. Explicit Types & Annotations 
+* Why Use Type Annotations?  
+* Explicitly Defining Function Parameters and Return Types.  
+* Examples:  
+     * Type Inference vs. Explicit Types. 
+
+6. Type Aliases  
+* What are Type Aliases and why use them?  
+* Syntax and examples.   
+--> Breakout session Handson on Type alias. 
+
+7. Object Literals  
+* Defining and using object types in TypeScript.  
+
+8. Type Assertion  
+* What is Type Assertion?  
+* Examples: Converting unknown types.  
+
+
+🕡 Wrap Up / Q&A
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+-------------------------------------------------------------------------
+
+TypeScript introduction :
+-------------------------
+
+TypeScript Installation commands:
+---------------------------------
+
+1. npm install typescript -g
+
+2. Check : tsc --version
+
+------------------------------------------------
+
+Note if you want directly run the .ts file follow below steps :
+--------------------------------------------------------------
+
+1. npm install -g ts-node
+
+2. npx tsc --init --> This will create a default tsconfig.json
+
+3. Make below changes in the tsconfig.json
+{
+  "compilerOptions": {
+    "module": "CommonJS"
+  }
+}
+4. Now execute the file directly using the below command
+
+ ts-node filename.ts
+
+
+ TypeScript datatypes :
+ ----------------------
+  Difference between "any" and "unknown"
+  --------------------------------------
+
+ ✅ any — “Turn Off TypeScript”
+let data: any = "Message received from the server";
+data = 1234;
+data = true;
+
+data.toUpperCase();  // ✅ No error at compile time
+data.push(10);       // ✅ No error
+data();              // ✅ No error
+
+🔴 Problem:
+
+TypeScript does not check anything on any.
+Even wrong operations compile successfully, and your app crashes at runtime.
+
+So "any" means:
+
+"I don't care about type safety."
+
+✅ unknown — “Safe Version of any”
+let value: unknown;
+
+value = 40;
+value = "Hello";
+
+value.toUpperCase(); // ❌ ERROR (compile time)
+
+
+TypeScript blocks you here because:
+
+"I don't know what type this is yet."
+
+Now we check:
+
+if (typeof value === "string") {
+    console.log(value.toUpperCase()); ✅ Allowed
+}
+
+
+✅ Now TypeScript knows it is a string.
+✅ You proved the type — so it allows safe operations.
+
+-----------------------------------------------------------
+
+Real time example for "unknown"  datatype :
+
+=> Reusable Utility Functions
+
+Suppose you're building a common logger:
+
+function logData(data: unknown) {
+
+    if (typeof data === "string") {
+        console.log(data.toUpperCase());
+    }
+}
+
+If you use any, someone can pass:
+
+logData(123);
+
+And it crashes.
+
+With unknown, framework forces validation.
+
+--------------------------------------------------------------
+
+never datatype :
+----------------
+
+✅ In Playwright, never is used for functions that permanently stop a test when a critical failure happens.
+
+Example :
+
+import { test, expect } from "@playwright/test";
+
+// A function that always stops the test
+
+function stopTest(message: string): never {
+    throw new Error(message);  // ❌ Test execution stops here
+}
+
+test("Login test with never example", async ({ page }) => {
+
+    await page.goto("http://leaftaps.com/opentaps/control/main");
+
+    const title = await page.title();
+
+    if (title !== "Login") { // when the title value is false 
+        stopTest("Login page did not load correctly"); // ✅ never
+    }
+
+    // ✅ This line runs ONLY if the title is correct
+    console.log("Test continues safely...");
+});
+
+-------------------------------------------------------------------
+
