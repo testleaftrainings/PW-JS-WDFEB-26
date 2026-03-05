@@ -1,0 +1,76 @@
+📑 Agenda for Week3Day04: TypeScript Key Features 
+ 
+🎯 [Focus: Deep Dive into TypeScript's Advanced Features]  
+
+🕝 Session Highlights
+
+Recap
+   - Key Takeaways from Week3. 
+
+1. Type Aliases  
+* What are Type Aliases and why use them?  
+* Syntax and examples.   
+--> Breakout session Handson on Type alias. 
+
+2. Object Literals  
+* Defining and using object types in TypeScript.  
+
+3. Type Assertion  
+* What is Type Assertion?  
+* Examples: Converting unknown types.  
+
+4. Enums  
+* Understanding Enums: Numeric and String Enums.
+
+-->Classroom activity on Enums
+
+🕡 Wrap Up / Q&A
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+-------------------------------------------------------------------------
+
+never datatype :
+----------------
+
+✅ In Playwright, never is used for functions that permanently stop a test when a critical failure happens.
+
+Example :
+
+import { test, expect } from "@playwright/test";
+
+// A function that always stops the test
+
+function stopTest(message: string): never {
+    throw new Error(message);  // ❌ Test execution stops here
+}
+
+test("Login test with never example", async ({ page }) => {
+
+    await page.goto("http://leaftaps.com/opentaps/control/main");
+
+    const title = await page.title();
+
+    if (title !== "Login") { // when the title value is false 
+        stopTest("Login page did not load correctly"); // ✅ never
+    }
+
+    // ✅ This line runs ONLY if the title is correct
+    console.log("Test continues safely...");
+});
+
+-------------------------------------------------------------------
+
+
+ Classroom activity on union type :
+ ------------------------------------
+
+- Create a function that accepts only specific payment methods.
+
+- Create a type alias called PaymentMethod that allows only "UPI", "CreditCard", or "PayPal".
+
+- Write a function makePayment that takes a parameter of type PaymentMethod and prints which payment method is chosen.
+
+- Call the function with "UPI" and "CreditCard" as arguments.
+
+
+-------------------------------------------------------------------
