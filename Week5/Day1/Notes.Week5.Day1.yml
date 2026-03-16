@@ -1,0 +1,220 @@
+📑 *Agenda for Week 5 Day 1: Advanced Playwright Interactions*
+🎯 *[ Focus: Handling real-world user interactions like windows, files, and data-driven testing ]*
+
+📆 *Date:* 16 March [Tuesday]  
+
+🕝 *Session Highlights*
+
+1. *File Upload*  
+* Uploading files using file input elements.  
+* Working with drag-and-drop style uploads.  
+* Example: Automating resume uploads in job portals.
+
+2. *File Download*  
+* Automating file download process in Playwright.  
+* Setting download paths and verifying file content.  
+
+3. *Reading JSON Files*  
+* Importing and parsing JSON test data.   
+* Best practices for maintaining test data files.
+
+
+--------------------------------------------------------------------------------
+Notes :
+------
+
+Playwright Locators Using TestId :
+----------------------------
+
+## Step 1 – What you configured
+
+```ts
+use: {
+  testIdAttribute: 'data-id'
+}
+```
+
+### Meaning in simple words:
+
+You told Playwright:
+
+> “From now on, whenever I say **getByTestId**,
+> don’t look for `data-testid`,
+> instead look for `data-id`.”
+
+So you **reprogrammed Playwright’s brain**.
+
+---
+
+## Step 2 – Your code
+
+```ts
+await page.getByTestId('MOBHFSCEDQXXDXUQ')
+         .locator('.RG5Slk')
+         .click();
+```
+
+---
+
+## Layman analogy 
+
+### Imagine a shopping mall 🏬
+
+Each shop has:
+
+* a **shop number** → `data-id`
+* inside the shop → different counters (`div`, `span`, etc.)
+
+---
+
+### You tell the security guard (Playwright):
+
+> “From today, when I say *shop id*, use the **shop number board**.”
+
+That’s this:
+
+testIdAttribute = 'data-id'
+
+---
+
+### Now you say:
+
+getByTestId("MOBHFSCEDQXXDXUQ")
+
+Playwright internally does:
+
+> “Go and find the element which has:
+html
+> data-id="MOBHFSCEDQXXDXUQ"
+
+Exactly like:
+
+```css
+[data-id="MOBHFSCEDQXXDXUQ"]
+```
+
+---
+
+### Then you say:
+
+```ts
+.locator('.RG5Slk')
+```
+
+Meaning:
+
+> “Inside that shop, go to the counter named `RG5Slk`”
+
+---
+
+### Then:
+
+```ts
+.click();
+```
+
+Meaning:
+
+> “Now physically click that counter”
+---
+
+## Why this is powerful (real-life reason)
+
+Without config:
+
+```ts
+getByTestId() → only data-testid
+```
+
+With config:
+
+```ts
+getByTestId() → any attribute YOU decide
+```
+
+So your framework becomes:
+
+* readable
+* business-friendly
+* independent of HTML structure
+
+---
+
+> “We are not changing our code to match the tool.
+> We are changing the tool to match the application.”
+
+This is how we do in real time projects.
+
+-----------------------------------------------------------------------------------------
+# File Upload
+--------------
+
+### **Definition**
+
+Uploading files into a web application using Playwright.
+Playwright simulates attaching files to `<input type="file">` elements or drag-and-drop areas.
+
+---
+
+### **When `type="file"` is Present**
+
+Directly set the file(s) to the input element.
+
+const fileInput = page.locator('input[type="file"]');
+await fileInput.setInputFiles('tests/data/sample.pdf');
+
+* **Multiple Files:**
+
+await fileInput.setInputFiles(['file1.png', 'file2.png']);
+
+---
+
+### **When `type="file"` is Not Present (Custom Upload UI)**
+
+Some apps hide the `<input>` or use a styled button (drag-drop zones).
+Steps:
+
+1. Inspect and find the hidden file input.
+2. Use `setInputFiles` on that hidden element.
+
+
+const hiddenInput = page.locator('#hidden-file-input');
+await hiddenInput.setInputFiles('tests/data/sample.pdf');
+
+
+If the input is not accessible at all → Workaround is to use OS-level automation (not Playwright’s scope).
+
+---
+
+# File Download
+----------------
+
+### **Definition**
+
+Handling files downloaded by the application (clicking "Download" links/buttons).
+
+---
+
+### **Usage**
+
+Playwright provides a `page.waitForEvent('download')` listener.
+
+
+const [download] = await Promise.all([
+  page.waitForEvent('download'),      // Wait for download event
+  page.click('text=Download Report')  // Trigger download
+]);
+
+// Save to desired path
+await download.saveAs('downloads/report.pdf');
+
+// Get file path in temp location
+console.log(await download.path());
+
+
+**Notes:**
+
+* Default: Playwright saves downloads in a temporary directory.
+* Always use `Promise.all` to avoid missing the download event.
+
+--------------------------------------------------------------------
