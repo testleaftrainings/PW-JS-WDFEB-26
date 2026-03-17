@@ -1,0 +1,13 @@
+
+[
+   {
+        "TCaseId":"TestCase1",
+        "Username":"demosalesmanager",
+        "Password":"crmsfa"
+    },
+    {
+        "TCaseId":"TestCase2",
+        "Username":"democsr2",
+        "Password":"crmsfa"
+    }
+]
