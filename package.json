@@ -1,0 +1,22 @@
+{
+  "name": "pw-js-wdfeb26",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:qa":"npx playwright test 01-learntoReadenv.spec.ts --config=playwright.qa.config.ts",
+    "test:prod":"npx playwright test 01-learntoReadenv.spec.ts --config=playwright.prod.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0"
+  },
+  "dependencies": {
+    "csv-parse": "^6.1.0",
+    "dotenv": "^17.3.1",
+    "xlsx": "^0.18.5"
+  }
+}
