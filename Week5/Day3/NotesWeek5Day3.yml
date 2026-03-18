@@ -1,0 +1,328 @@
+📑 Agenda for Week 5 Day 3: Advanced Data Parameterization using ENV and Test Annotation
+
+🎯 [Focus: Advanced Data Parameterization and Test Annotation]  
+
+📆 Date: 18 March [Wednesday]  
+
+🕝 Session Highlights
+
+⿡ Recap
+* Quick review of key learnings from previous sessions. 
+
+1. Reading ENV Files  
+* Importing and parsing ENV test data.   
+* Best practices for maintaining test data files. 
+
+**Break and Breakout Session**
+
+2. Test Annotations // Annotation - Hooks
+
+* Enhancing test readability and control using annotations.
+* Examples: Skipping, focusing specific tests.
+
+🕡 Wrap Up / Q&A  
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+--------------------------------------------------------------------------------------
+
+# Data Parameterization with ENV
+---
+### **Definition**
+
+A .env file (short for environment file) is a simple text file used to store environment variables in the form of key-value pairs.
+
+It is commonly used in projects to separate configuration data (like URLs, API keys, database credentials, secrets) from the actual application code.
+
+Usage
+1. Sample ENV (config.env): 
+APP_URL=https://example.com
+USERNAME=demoUser
+PASSWORD=securePass123
+
+
+Step 1:
+Install dotenv : command - 
+npm install dotenv
+Step 2:
+Create a .env file under Data folder.
+Step 3:
+Create a .spec.ts and import data from env file similar to the sample script. 
+Step 4:
+Use the imported data in your test cases for validation.
+Step 5:
+Run the test to see data-driven testing in action.
+
+-----------------------------------------------------------------------
+
+# Test Annotation : Hooks
+---
+
+--> Control the behaviour of the execution.
+
+hooks -> The execution flow before and after the actual test execution.
+------
+test.beforeAll --> before all test it will be executed
+test.beforeEach --> before each test it will be executed
+test.afterEach -->  after each test it will be executed
+test.afterAll --> after all test it will be executed
+
+
+
+Other Test Annotation 
+---
+
+test.only --> focus on a specific test.
+test.skip --> ignore the test from execution
+test.fixme --> track and know failures that are yet tp be fixed
+test.fail --> for negative testing --> test has to fail is the expectation
+test.slow --> triple the timeout of the tests execution --> 30 s --> 60 s for the entire test execution
+test.describe --> grouping the test depending on the status of the other test.
+test.use -->use the functionalities
+
+----------------------------------------
+
+``ts
+import { test, expect } from "@playwright/test";
+
+/**
+ * =========================
+ * test.skip()
+ * =========================
+ * Purpose:
+ * - Do NOT execute the test at all
+ * - Used when environment / feature is NOT ready
+ */
+test.skip('Skip when environment is not ready', async ({ page }) => {
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+  await page.locator('.decorativeSubmit').click();
+  await page.locator('text=CRM/SFA').click();
+});
+
+
+/**
+ * =========================
+ * test.fixme()
+ * =========================
+ * Purpose:
+ * - Test is known to be broken or flaky
+ * - Acts as a reminder to FIX later
+ * - Test will be skipped, but marked as "needs fixing"
+ */
+test.fixme('Test is under repair / flaky', async ({ page }) => {
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+  await page.locator('.decorativeSubmit').click();
+  await page.locator('text=CRM/SFA').click();
+});
+
+
+/**
+ * =========================
+ * test.fail()
+ * =========================
+ * Purpose:
+ * - Test WILL run
+ * - Failure is EXPECTED due to a known bug
+ * - Failure will NOT break CI
+ */
+test.fail('Known bug: CRM link not visible', async ({ page }) => {
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+  await page.locator('.decorativeSubmit').click();
+
+  // Known issue: locator fails
+  await expect(page.locator('text=CRM/SFA')).toBeVisible();
+});
+
+
+/**
+ * =========================
+ * test.slow()
+ * =========================
+ * Purpose:
+ * - Mark test as slow
+ * - Doubles the default timeout
+ */
+test('Slow test example (timeout increased)', async ({ page }) => {
+
+  test.slow(); // increases timeout (approx 2x default)
+
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+
+  await page.locator('.decorativeSubmit').click();
+
+  await page.locator('text=CRM/SFA').click();
+});
+```
+
+---
+
+##  Simple Explanation 
+
+###  `test.skip()`
+
+>  Don’t run this test at all
+
+* Used when:
+
+  * Environment is down
+  * Feature not implemented
+* Result in report: **Skipped**
+
+---
+
+###  `test.fixme()`
+
+>  This test is broken – fix it later
+
+* Same as skip
+* But tells the **team**:
+
+  > “This test needs fixing”
+* Very useful for flaky tests
+
+---
+
+###  `test.fail()`
+
+>  Run the test, but failure is expected
+
+* Test **executes**
+* If it fails → ✔ expected
+* If it passes → ⚠ unexpected (bug may be fixed!)
+
+---
+
+###  `test.slow()`
+
+>  This test needs more time
+
+* Increases timeout
+* Useful for:
+
+  * Slow APIs
+  * Heavy pages
+  * Large uploads/downloads
+
+---
+
+##  Quick Memory Table
+
+| Annotation   | Runs? | Purpose                         |
+| ------------ | ----- | ------------------------------- |
+| `test.skip`  | ❌ No  | Environment / feature not ready |
+| `test.fixme` | ❌ No  | Broken / flaky test             |
+| `test.fail`  | ✅ Yes | Known bug                       |
+| `test.slow`  | ✅ Yes | Needs more time                 |
+
+
+-----------------------------------------------------------------------------------------
+
+🔹 Different types of imports in JS / TS
+
+There are two main ways to import something:
+
+1️⃣ Default import
+import fs from "fs";
+
+2️⃣ Named import
+import { parse } from "csv-parse/sync";
+
+🔹 Why fs does NOT use { }?
+✅ Because fs is a DEFAULT EXPORT
+
+The Node.js fs module exports one main object (the whole file system API).
+
+So you import the entire module as a single object:
+
+import fs from "fs";
+
+
+👉 fs now contains:
+
+fs.readFileSync
+fs.writeFileSync
+fs.existsSync
+fs.mkdirSync
+...
+
+
+You access methods using dot notation:
+
+fs.readFileSync("data.csv");
+
+🔹 Why parse DOES use { }?
+✅ Because parse is a NAMED EXPORT
+
+The csv-parse/sync module exports specific functions, one of which is parse.
+
+So you must destructure it:
+
+import { parse } from "csv-parse/sync";
+
+
+👉 You are saying:
+
+“Give me only the parse function from this module”
+
+Usage:
+
+const records = parse(csvData);
+
+🔹 Think of it like a real-life example 🧠
+📦 Module as a Box
+fs module:
+📦 fs
+ ├── readFileSync
+ ├── writeFileSync
+ ├── unlinkSync
+ └── ...
+
+
+You take the whole box:
+
+import fs from "fs";
+
+csv-parse/sync module:
+📦 csv-parse
+ ├── parse
+ ├── stringify
+ └── ...
+
+
+You take only one item from the box:
+
+import { parse } from "csv-parse/sync";
+
+🔹 Can fs be imported with {}?
+
+❌ This will NOT work:
+
+import { fs } from "fs"; // ❌ WRONG
+
+
+But ✅ this will work:
+
+import { readFileSync } from "fs";
+
+
+Because readFileSync is a named export.
+
+🔹 Summary Table 📌
+Import Style	Syntax	When to Use
+Default Import	import fs from "fs"	When module exports ONE main object
+Named Import	import { parse } from "csv-parse/sync"	When module exports multiple named items
+🔹 Relating to Playwright (easy to remember)
+import test from "@playwright/test";   // default export
+import { expect } from "@playwright/test"; // named export
