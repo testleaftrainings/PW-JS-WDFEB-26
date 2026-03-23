@@ -1,0 +1,351 @@
+📑 Agenda for Week6 Day1: REST API Fundamentals  
+
+🎯 [ Focus: Understanding the core concepts and hands-on implementation of REST APIs ]  
+
+📆 Date: 23 Mar. [Mon]  
+
+🕝 Session Highlights  
+
+1. Introduction to REST API  
+* Overview of REST architecture and principles.  
+
+2. Headers  
+* Understanding HTTP headers and their significance in API requests.  
+
+3. Verbs (POST, PUT, GET, DELETE, PATCH)  
+* Explanation of HTTP methods and their use cases.  
+
+************************BREAK***************************************
+
+4. Request Body & Response Body  
+* Understanding the structure and purpose of request and response payloads.  
+
+5. Authorization Types  
+* Overview of different authorization methods (e.g., Basic Auth, OAuth2).
+
+6. Create Incident in ServiceNow
+* Practical exercise- Working with Incident using POST and GET requests. 
+
+**************************BREAKOUT***************************************
+
+🕡 Wrap Up / Q&A  
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+****************************************************************************
+
+API Notes :
+----------
+
+REST -> Represtational State Transfer
+API -> Apllication Programming Interface
+
+
+UI -> Customer facing interface
+API -> Middle ware 
+
+
+All -> REST API Explorer
+
+
+Service Now Navigation to Create Incidents using UI interface and API Interface within servicenow :
+
+--> UI => All -> Type Incident  (in Filter text box) --> Choose Incident from Service Desk
+--> REST API => All -> REST API Explorer --> Choose Create a record POST --> Choose tableName = Incident and Under Request Body --> Choose Short Description and fill a short description.
+
+--------------------------------------------------------------------------------------------------
+
+Interview Based Questions :
+-------------------------
+
+1. Architectute Type?
+REST API's follow's Client server archirtecture.
+Micro services.
+
+2. HTTP Request Methods :(CRUD operations--> Create Update Retrieve, Delete)
+POST, PUT, PATCH, GET, DELETE
+
+3. Difference between URI and URL?
+
+A URI (Uniform Resource Identifier) is a string that uniquely identifies a resource, while a URL (Uniform Resource Locator) is a type of URI that specifies the resource’s location (address) and how to access it.
+
+4. Stateless/ Statefull?
+
+A stateless system means:
+Each request is independent — the server does not remember anything about previous requests.
+
+A stateful system means:
+The server remembers information (state) between requests.
+
+REST API follow stateless, which means request contains all the information needed to process your activity. 
+
+5.Difference between Authentication and Authorization?
+Authentication verifies identity , while authorization checks access rights.
+
+| Concept           | **Authentication**                                   | **Authorization**                                                        |
+| ----------------- | ---------------------------------------------------- | ------------------------------------------------------------------------ |
+| **Meaning**       | It verifies **who you are**                          | It defines **what you can do**                                           |
+| **Purpose**       | Confirms the **identity** of a user                  | Grants or restricts **access/permissions**                               |
+| **Happens When?** | Always happens **before** authorization              | Happens **after** authentication                                         |
+| **Example**       | You log in with your username and password           | Once logged in, you can access only your own profile, not admin settings |
+| **Analogy**       | Showing your ID card at the gate                     | Being allowed to enter only certain rooms based on your role             |
+
+
+6. Various Response Code?
+Response Codes liek 201 Created, 200 (OK), 401(Unauthorized), 404(NOt found).
+
+200 series --> success of what ecer api action that you implement (eg POST, GET, PUT, PATCH, DELETE )
+400 series --> Client side error. (ex username, password, endpoint , request body format)
+500 series --> Server side error. (ex server down)
+
+7. Request Headers ?
+
+Headers are key-value pairs sent along with the request that describe how the client and server should communicate.
+
+Example : 
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer <token>
+
+8. Schema Validation and response validation?
+
+Schema Validation :
+
+Schema validation checks if the data structure (keys + value types) in the response matches the expected format.
+
+Example:
+
+{
+"id":101,
+"name":"Ravi",
+"isActive":true
+}
+
+{
+"id":"101",           //id is a string not a number
+"name":"Ravi",
+"isActive":true
+}
+
+Response validation:
+Response validation checks the actual values returned, not just the data type.
+
+Example:
+
+{
+"id":101,
+"name":"Ravi",
+"isActive":true
+}
+
+{
+"id":"101",           //wrong value reponse validation
+"name":"Ravi",
+"isActive":false
+}
+
+---
+
+9. Difference between REST API and REST ASSURED?
+
+REST API is the actual web services, while REST ASSURED is a Java Library used to test REST API's.
+
+---
+10. Path parameter and query parameter?
+
+| Feature             | **Path Parameter**                                      | **Query Parameter**                       |
+| ------------------- | ------------------------------------------------------- | ----------------------------------------- |
+| **Purpose**         | Identifies a **specific resource**                      | Filters or customizes the **result**      |
+| **Location in URL** | Part of the **URL path**                                | Comes **after `?`** in the URL            |
+| **Syntax Example**  | `/users/101`                                            | `/users?id=101`                           |
+| **UsempId**           | To point to one resource (like a specific user or lead) | To send filters, search terms, or options |
+| **Visibility**      | Mandatory part of the endpoint                          | Optional part of the endpoint             |
+| **Separator**       | `/` slash                                               | `?` for first, `&` for multiple           |
+
+
+
+---
+11. Five Steps process for API testing
+------------------------------------
+
+1. Documentation
+: Understanding the API’s purpose, structure, and usempId guidelines before testing.
+Example: 
+: Reading Swagger docs that describe how the incident API works in an application.
+
+2. Endpoints: 
+: Specific URLs that represent resources or actions to be tested.
+Example: 
+: https://dev356721.service-now.com/api/now/table/incident (incident resource).
+
+3. Methods: 
+: HTTP operations (GET, POST, PATCH, PUT, DELETE, etc.) that define the type of action on the resource.
+Example: 
+: GET /incident → fetch incidents; POST /incident → create a new incident.
+
+4. Headers: 
+: Metadata sent with requests or responses to control and describe API behavior.
+Example: 
+Content-Type: application/json, Accept: application/json.
+
+5. Authorization: 
+: Security mechanism to verify and allow only valid users or systems to access the API.
+Example: 
+Authorization: Bearer <token> or Basic Auth with username & password.
+
+Together, these 5 steps ensure your API test covers what, where, how, and who can access the service.
+********************************************************************************************
+OAuth 2.0 (Open Authorization) is an authorization framework where an Authorization Server generates access tokens to allow clients to securely access protected resources.
+
+********************************************************************************************
+
+What is ServiceNow?
+
+ServiceNow is an IT Service Management (ITSM) tool — it helps companies handle things like:
+
+Reporting IT issues (e.g., “My laptop won’t start”)
+
+Requesting new hardware/software
+
+Tracking incidents, changes, and problems
+
+Automating workflows across departments
+
+It’s like a one-stop system for all service requests within a company — IT, HR, facilities, finance, etc.
+
+---------------------------
+
+Service instance , username and password :
+
+https://dev231458.service-now.com/login.do?user_name=admin&sys_action=sysverb_login&user_password=Z9*Le0wEL-ah
+
+username : admin
+password : Z9*Le0wEL-ah
+
+---------------------------------------------------------------------------------------------------
+
+Request Payload :
+----------------
+
+{
+  "short_description": "Email not working",
+  "description": "User cannot send or receive emails",
+  "comments": "Updated via POSTMAN",
+  "work_notes": "Checked mail server logs",
+  "subcategory": "Email",
+  "impact": "2",
+  "urgency": "2"
+}
+
+-----------------------------------------------
+
+
+{
+  result: {
+    parent: '',
+    made_sla: 'true',
+    caused_by: '',
+    watch_list: '',
+    upon_reject: 'cancel',
+    sys_updated_on: '2025-12-20 12:43:06',
+    child_incidents: '0',
+    hold_reason: '',
+    origin_table: '',
+    task_effective_number: 'INC0010168',
+    approval_history: '',
+    number: 'INC0010168',
+    resolved_by: '',
+    sys_updated_by: 'admin',
+    opened_by: {
+      link: 'https://dev291487.service-now.com/api/now/table/sys_user/6816f79cc0a8016401c5a33be04be441',
+      value: '6816f79cc0a8016401c5a33be04be441'
+    },
+    user_input: '',
+    sys_created_on: '2025-12-20 12:43:06',
+    sys_domain: {
+      link: 'https://dev291487.service-now.com/api/now/table/sys_user_group/global',
+      value: 'global'
+    },
+    state: '2',
+    route_reason: '',
+    sys_created_by: 'admin',
+    knowledge: 'false',
+    order: '',
+    calendar_stc: '',
+    closed_at: '',
+    cmdb_ci: '',
+    delivery_plan: '',
+    contract: '',
+    impact: '2',
+    active: 'true',
+    work_notes_list: '',
+    business_service: '',
+    business_impact: '',
+    priority: '3',
+    sys_domain_path: '/',
+    rfc: '',
+    time_worked: '',
+    expected_start: '',
+    opened_at: '2025-12-20 12:43:06',
+    business_duration: '',
+    group_list: '',
+    work_end: '',
+    caller_id: '',
+    reopened_time: '',
+    resolved_at: '',
+    approval_set: '',
+    subcategory: 'email',
+    work_notes: '',
+    universal_request: '',
+    short_description: 'Email not working',
+    close_code: '',
+    correlation_display: '',
+    delivery_task: '',
+    work_start: '',
+    assignment_group: '',
+    additional_assignee_list: '',
+    business_stc: '',
+    cause: '',
+    description: 'User cannot send or receive emails',
+    origin_id: '',
+    calendar_duration: '',
+    close_notes: '',
+    notify: '1',
+    service_offering: '',
+    sys_class_name: 'incident',
+    closed_by: '',
+    follow_up: '',
+    parent_incident: '',
+    sys_id: '695ab47bc3fd72108b193cec050131d1',
+    contact_type: '',
+    reopened_by: '',
+    incident_state: '2',
+    urgency: '2',
+    problem_id: '',
+    company: '',
+    reassignment_count: '0',
+    activity_due: '',
+    assigned_to: {
+      link: 'https://dev291487.service-now.com/api/now/table/sys_user/5137153cc611227c000bbd1bd8cd2005',
+      value: '5137153cc611227c000bbd1bd8cd2005'
+    },
+    severity: '3',
+    comments: '',
+    approval: 'not requested',
+    sla_due: '',
+    comments_and_work_notes: '',
+    due_date: '',
+    sys_mod_count: '0',
+    reopen_count: '0',
+    sys_tags: '',
+    escalation: '0',
+    upon_approval: 'proceed',
+    correlation_id: '',
+    location: '',
+    category: 'inquiry'
+  }
+}
+
+
+
+
