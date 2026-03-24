@@ -1,0 +1,123 @@
+📑 Agenda for Week 06 Day 02: Salesforce API Testing using POSTMAN
+🎯 [ Focus: Understanding the core concepts and hands-on implementation of REST APIs ]  
+
+📆 Date: 24 Mar. [Tuesday]  
+
+🕝 Session Highlights  
+
+⿡ Recap  
+* Quick review of key learnings from previous sessions.  
+
+
+⿥ Request Body & Response Body  
+* Understanding the structure and purpose of request and response payloads.  
+
+⿦ Authorization Types  
+* Overview of different authorization methods (e.g., Basic Auth, OAuth2).
+
+⿨ Create Lead in Salesforce
+* Practical exercise: Working with Lead using POST and GET requests. 
+
+⿧ Implementation in Postman - POST & GET Salesforce With Global Variable [Salesforce]
+* Demonstration: Creating and retrieving Incidents.
+
+🕡 Wrap Up / Q&A  
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+
+***************************************************************************************
+
+Important Salesforce Account Links :
+-------------------------------------
+
+Salesforce document to get endpoint to generate access token  :
+https://help.salesforce.com/s/articleView?languempId=en_US&id=xcloud.remoteaccess_oauth_endpoints.htm&type=5
+
+Salesforce document to do CRUD operation for  Lead /Account :
+https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_curl.htm 
+
+
+--------------------------------------
+Steps to find the field in salesforce :
+----------------------------------------
+
+From Salesforce Setup (Recommended)
+
+Log in to your Salesforce Developer Org.
+
+Go to Setup → Object ManempIdr.
+
+Search for and click on Lead.
+
+Open Fields & Relationships.
+
+You’ll see a list of all the fields available on the Lead object.
+
+The Field Label is what you see in the UI (e.g., “Last Name”).
+
+The Field Name is what you use in the API (e.g., LastName, Company).
+
+These “Field Names” are what you should use in your JSON request body.
+
+https://testleaf22-dev-ed.develop.my.salesforce-setup.com/lightning/setup/ObjectManempIdr/Lead/FieldsAndRelationships/view
+
+✅ Example:
+
+{
+
+  "LastName": "Ravindran",
+  "Company": "Testleaf",
+  "Email": "ravi@testleaf.com",
+  "Phone": "8888888"
+}
+
+-------------------------------------------------------------------------------
+
+Script used to set global variable:
+-----------------------------------
+
+var leadresponse = pm.response.json();
+console.log(leadresponse)
+
+var resToken = leadresponse.access_token
+
+var url = leadresponse.instance_url
+
+pm.globals.set("GeneratedToken",resToken)
+
+
+---------------------------------------------
+
+
+Step 1 :
+
+Goto : https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_curl.htm
+
+Srep 2 :
+
+Copy the cURL from the link as below :
+
+https://MyDomainName.my.salesforce.com/services/data/v66.0/sobjects/Account/
+
+In the endpoint changes:
+https://MyDomainName.my.salesforce.com => Your instance url / domain name retreived from the terminal output of generate tojen request
+
+https://testleaf22-dev-ed.develop.my.salesforce.com
+
+Terminal Output of generate token :
+
+{
+    "access_token": "00DNS000001rTAX!AQEAQM_LIfRGXgCS1S9R5YkCOQ_3WeZJB8KsC4fLJmfLtAn03bBXafc79c8zVsH0pb0KfXzrOSfhGPpgu91AMvMSmR9mDWng",
+    "instance_url": "https://testleaf22-dev-ed.develop.my.salesforce.com",
+    "id": "https://login.salesforce.com/id/00DNS000001rTAX2A2/005NS000001C9hOYAS",
+    "token_type": "Bearer",
+    "issued_at": "1774332382402",
+    "signature": "kZ6XfzHVg8ZaJHLsXLuyFHuCwOV4Sj2lz3TiZqkF77Y="
+}
+
+https://testleaf22-dev-ed.develop.my.salesforce.com/services/data/v66.0/sobjects/Account/
+
+
+Step 3: Change the version from v66 to v65 and account to Lead
+https://testleaf22-dev-ed.develop.my.salesforce.com/services/data/v65.0/sobjects/Lead/
