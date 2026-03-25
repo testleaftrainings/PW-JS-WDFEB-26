@@ -1,0 +1,395 @@
+{
+  "info": {
+    "_postman_id": "e6b948ed-f96c-4768-966a-ea5efc9f9f5d",
+    "name": "Salesforce_WDFeb26",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44448055",
+    "_collection_link": "https://go.postman.co/collection/44448055-e6b948ed-f96c-4768-966a-ea5efc9f9f5d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Generate_Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "\r",
+              "\r",
+              "let responseGenerateToken =pm.response.json();\r",
+              "console.log(responseGenerateToken);\r",
+              "\r",
+              "\r",
+              "let resToken = responseGenerateToken.access_token\r",
+              "console.log(resToken)\r",
+              "\r",
+              "pm.collectionVariables.set(\"ResourceToken\",resToken)\r",
+              "\r",
+              "\r",
+              "let resUrl = responseGenerateToken.instance_url\r",
+              "console.log(resUrl)\r",
+              "\r",
+              "pm.globals.set(\"InstanceUrl\",resUrl)\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "3MVG9VMBZCsTL9hnYaVamF_yN9dU9vnyYTjdMcnDvjqPwwaBINmmrxc5nreM3diNAwBKSsbWXhbOweaL8rdNB",
+              "type": "text",
+              "uuid": "327fc490-de99-4ba1-8d8f-94b8775172e2"
+            },
+            {
+              "key": "client_secret",
+              "value": "045B87EED90898F6D00920E973955E048E340B15506294A39847C4C824C8E260",
+              "type": "text",
+              "uuid": "80194de5-c556-4515-8a65-b64eab19722b"
+            },
+            {
+              "key": "username",
+              "value": "ravindran.ramdas@testleaf.com",
+              "type": "text",
+              "uuid": "1b55e142-5283-4764-9bce-cf42887dc762"
+            },
+            {
+              "key": "password",
+              "value": "Ravisalesplay#1234",
+              "type": "text",
+              "uuid": "7daebaa0-19e6-483e-b405-9f1f4ecf7c41"
+            },
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "253bc038-3091-4ebe-8155-0519cc7e8970"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://login.salesforce.com/services/oauth2/token",
+          "protocol": "https",
+          "host": [
+            "login",
+            "salesforce",
+            "com"
+          ],
+          "path": [
+            "services",
+            "oauth2",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create_Lead",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "\r",
+              "let leadResponse =pm.response.json()\r",
+              "console.log(leadResponse)\r",
+              "\r",
+              "console.log(leadResponse.id) //00QNS00000oEUSr2AO\r",
+              "\r",
+              "pm.environment.set(\"LeadId\",leadResponse.id)\r",
+              "\r",
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ResourceToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"LastName\": \"Ravindran\",\r\n  \"Company\": \"Testleaf\",\r\n  \"Phone\": \"9876543210\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{InstanceUrl}}/services/data/v65.0/sobjects/Lead/",
+          "host": [
+            "{{InstanceUrl}}"
+          ],
+          "path": [
+            "services",
+            "data",
+            "v65.0",
+            "sobjects",
+            "Lead",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch_Lead",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ResourceToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{InstanceUrl}}/services/data/v65.0/sobjects/Lead/{{LeadId}}",
+          "host": [
+            "{{InstanceUrl}}"
+          ],
+          "path": [
+            "services",
+            "data",
+            "v65.0",
+            "sobjects",
+            "Lead",
+            "{{LeadId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update_Lead",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ResourceToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"LastName\": \"Ravindran\",\r\n  \"Company\": \"Qeagle\",\r\n  \"Email\": \"ravindran@qeagle.com\",\r\n  \"Phone\": \"4553535\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{InstanceUrl}}/services/data/v65.0/sobjects/Lead/{{LeadId}}",
+          "host": [
+            "{{InstanceUrl}}"
+          ],
+          "path": [
+            "services",
+            "data",
+            "v65.0",
+            "sobjects",
+            "Lead",
+            "{{LeadId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete_Lead",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{ResourceToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{InstanceUrl}}/services/data/v65.0/sobjects/Lead/{{LeadId}}",
+          "host": [
+            "{{InstanceUrl}}"
+          ],
+          "path": [
+            "services",
+            "data",
+            "v65.0",
+            "sobjects",
+            "Lead",
+            "{{LeadId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "ResourceToken",
+      "value": ""
+    }
+  ]
+}
