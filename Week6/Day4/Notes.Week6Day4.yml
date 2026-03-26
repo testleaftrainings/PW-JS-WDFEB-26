@@ -1,0 +1,27 @@
+📑 Agenda for Week 06 Day 04: Playwright with REST API Integration - SALESFORCE
+
+🎯 [ Focus: Integrating Playwright with REST APIs for End-to-End Automation Testing ]
+
+📆 [26 Mar. Thursday]  
+
+🕝 Session Highlights  
+
+⿡ Recap  
+* Quick review of key learnings from previous sessions.  
+
+SALESFORCE :
+------------
+⿦ APIRequest, APIRequestContext, APIResponse  
+* Overview of these key Playwright API concepts.  
+
+⿧ Status Code, Response Body & Response Time  
+* Understanding and validating API response attributes.  
+
+⿨ POST Call (Creating a Lead)  
+* Demonstration of making POST requests in Playwright.  
+
+⿩ GET Call (Retrieving the Lead)  
+* Retrieving data using GET requests in Playwright.  
+
+ DELETE Call (Deleting the Lead)  
+* Automating the deletion of records using DELETE requests.  
