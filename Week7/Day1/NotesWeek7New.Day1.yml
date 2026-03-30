@@ -1,0 +1,286 @@
+📑 **Agenda for Week 7 Day 1: API End to End testing & Playwright Advanced Features
+🎯 [Focus: API end to end and Playwright Features]
+
+📆 [30th March 2026 Monday]
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Jira Integration
+Linking test results with Jira issues.
+Automating status updates and reporting.
+
+2. Advanced Features of Playwright.
+Visual Regression.
+
+------------------------------------------------
+
+
+
+Visual Regression Testing – Explained Simply
+What is Visual Regression?
+
+Visual regression testing checks that the UI looks the same as before after a code change.
+
+It compares the current UI screenshot with a baseline screenshot and reports differences.
+
+Why Visual Regression is Needed
+1️⃣ Functional tests don’t catch UI issues
+
+A button may work but be:
+
+Misaligned
+
+Overlapping text
+
+Wrong color or font
+
+Functional assertions won’t fail, but users notice immediately.
+
+2️⃣ CSS changes are risky
+
+Small CSS changes can break layouts across pages
+
+Effects may appear only on certain resolutions or browsers
+
+Visual regression catches these silent failures
+
+3️⃣ Reduces Manual Visual Checking
+
+No need to manually check UI after every release
+
+Especially useful for:
+
+Dashboards
+
+Reports
+
+Marketing pages
+
+How Visual Regression Works
+
+Capture baseline screenshot (expected UI)
+
+Capture current screenshot (after changes)
+
+Compare pixel-by-pixel
+
+Fail the test if differences exceed tolerance
+
+Visual Regression in Playwright
+Example
+await expect(page).toHaveScreenshot('homepage.png');
+
+
+Playwright will:
+
+Take a screenshot
+
+Compare it with the baseline
+
+Highlight visual differences if any
+
+What Can Be Tested Visually
+
+Page layouts
+
+Component alignment
+
+Fonts, colors, icons
+
+Charts and dashboards
+
+Responsive UI (desktop vs mobile)
+
+What Should NOT Be Tested Visually
+
+Dynamic data (timestamps, live numbers)
+
+Animations
+
+Ads or rotating banners
+
+Frequently changing content
+
+Best Practices
+
+✔ Use visual tests only for stable UI areas
+✔ Mask dynamic content
+✔ Set tolerance thresholds
+✔ Run in CI with same resolution and browser
+✔ Keep baselines under version control
+
+
+//Notes :
+ //assert a specific portion 
+
+
+/* import { expect, test } from "@playwright/test";
+
+test('Partial Visual check', async ({ page }) => {
+  await page.goto('https://www.testleaf.com/');
+
+  // Crop the screenshot to a specific area
+  const ss = await page.screenshot({
+    clip: {
+      x: 100,      // starting x coordinate
+      y: 200,      // starting y coordinate
+      width: 300,  // width of the area
+      height: 200  // height of the area
+    }
+  });
+
+  expect(ss).toMatchSnapshot('partial-visual-check.png');
+}); */
+   
+
+/* Note using percy:
+npm install --save-dev @percy/cli @percy/playwright
+ */
+----------------------------------------------------------
+
+
+//Purpose of visual regression testing :
+//1. Detect unintended UI changes in web applications.
+//2. Ensure consistent appearance across different browsers and devices.
+//3. Practical examples: Catching layout shifts, color changes, or missing elements.  
+
+
+----------------------------------------------------------------------
+
+To store the snpshot in a different path :
+
+const ss = await page.screenshot({ path: "screenshot/base.png" });
+expect(ss).toMatchSnapshot()
+```
+
+---
+
+## 🔹 Where are images stored?
+
+### ✅ 1. Your manual screenshot (YOU controlled it)
+
+📍 Location:
+
+```bash
+screenshot/base.png
+```
+
+👉 This is saved exactly where you specified
+👉 Relative to your project root
+
+✔ This happens because of:
+
+```ts
+path: "screenshot/base.png"
+```
+
+---
+
+### ✅ 2. Playwright snapshot (AUTO handled)
+
+Even though you gave a path above, this line:
+
+```ts
+expect(ss).toMatchSnapshot()
+```
+
+👉 STILL creates/uses snapshot here:
+
+```bash
+tests/Week7/Day1/visualRegressionTesting.spec.ts-snapshots/
+```
+
+📄 Example:
+
+```bash
+Visual-regression-testing-1-chromium-win32.png
+```
+
+---
+
+### ✅ 3. Actual + Diff (if failure)
+
+📍 Stored in:
+
+```bash
+test-results/
+```
+
+---
+
+## 🔹 Important concept (this is where many get confused)
+
+👉 `page.screenshot({ path })`
+= **Manual storage (your control)**
+
+👉 `toMatchSnapshot()`
+= **Playwright visual testing system (separate)**
+
+⚠️ These are **independent**
+
+---
+
+## 🔹 What your code is doing internally
+
+1. Takes screenshot → saves in:
+
+   ```
+   screenshot/base.png
+   ```
+
+2. Same image (`ss`) passed to:
+
+   ```
+   toMatchSnapshot()
+   ```
+
+3. Playwright:
+
+   * compares with baseline in `*-snapshots`
+   * generates actual/diff in `test-results`
+
+---
+
+## 🔹 Interview-level explanation 🎯
+
+> Even if we pass a custom path to `page.screenshot()`, Playwright’s `toMatchSnapshot()` does not use that file as baseline. It maintains its own snapshot folder and comparison mechanism independently.
+
+---
+
+## 🔹 If your intention was this 👇
+
+👉 “Use `screenshot/base.png` as baseline”
+
+❌ This will NOT happen automatically
+
+---
+
+## 🔹 Correct way to control snapshot name
+
+```ts
+expect(ss).toMatchSnapshot("base.png")
+```
+
+Then Playwright stores:
+
+```bash
+*-snapshots/base.png
+```
+
+---
+
+## 🔹 Simple takeaway
+
+| Action                      | Storage Location   |
+| --------------------------- | ------------------ |
+| `page.screenshot({ path })` | Your custom folder |
+| `toMatchSnapshot()`         | `*-snapshots/`     |
+| Failures                    | `test-results/`    |
+
+---
+
+
+
