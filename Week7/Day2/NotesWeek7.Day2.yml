@@ -1,0 +1,246 @@
+📑 **Agenda for Week 7 Day 2: Jira Integration & Introduction to OOPs in TypeScript
+🎯 [Focus: Jira Integration and OOPS concept]
+
+📆 [31st Mar. Tuesday]
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+
+1. Jira Integration
+Linking test results with Jira issues.
+Automating status updates and reporting.
+
+2. Class & Objects in TypeScript
+
+Understanding the basics of classes and objects in TypeScript.
+Examples: Creating and using classes and objects.
+
+3. Constructors
+
+Role of constructors in initializing objects.
+Examples: Using parameterized and default constructors.
+
+
+------------------------------------------------------------------------------------
+
+
+
+Agenda :
+
+1. Class and Object.[Encapsulation]
+2. Method and properties.
+3. Constructor.
+
+***************************************************************************************
+Class and Object:
+
+
+Real life example of Class and Object, Properties and Methods:
+
+###  What is a *Class*?
+
+A *class* is like a *blueprint* or *template* for creating something.
+
+Think of it like this:
+When a car company (like Toyota) designs a new model — say the *Innova* — they first create a *design or blueprint*.
+That blueprint has details like:
+
+* The engine type
+* Number of seats
+* Fuel capacity
+* Basic shape and dimensions
+
+But the *blueprint itself is not a car* — it’s just a design or a plan.
+
+Script:
+-------
+
+
+
+
+Example 2 with application login :
+-----------------------------------
+
+property :
+---------
+Represents the information or data related to a particular page or object
+(e.g., username, password, URL).
+
+method :
+-------- 
+Represents the actions or operations performed on that page or object
+(e.g., fill a field, click a button, submit a form).
+
+******************************************************************************************
+
+Sample Program :
+--------------
+
+class LoginPage { // Encapsulation 
+
+property :
+---------
+
+username = "democsr2"
+password = "crmsfa"
+
+methods : // Actionables performed using the properties
+------
+
+fill(){
+
+fill the username and password using properties
+
+}
+
+click(){
+
+click the submit button
+}
+
+}
+
+
+const loginPage = new LoginPage();
+
+loginPage.username
+loginPage.password
+
+
+loginPage.fill(); // Invoking the fill action
+loginPage.click(); // involing the click action 
+
+
+Object is the instance/ referenece of a class used to invoke the properties and methods of a class to perform a login action/ functionality
+
+
+
+****************************************************************************************
+Constructor:
+
+Definition
+A constructor in TypeScript is a method named constructor() that runs once at the time of object creation and sets up the initial state of the object.
+Or a Special method to initialize the object
+
+*******************************************************************************************
+
+
+class LoginPage{
+
+//Properties:
+------------
+
+username = "democsr2"
+password = "crmsfa"
+
+//Method :
+
+fill(){ // Method block--> block of code to perform an action
+//Actionables
+fill method
+use the properties "username" and "password" to perform the action to fill the login form
+}
+
+click(){
+//Actionables
+click method
+}
+}
+
+
+const lp = new LoginPage() // ✔️ Memory is allocated //syntax to create an object(reference/ instance/copy) for a class to call the methods(actionable blocks) inside the class 
+lp.fill()
+lp.click()
+
+class WelcomePage{
+click(){
+//Actionables
+click method
+}
+}
+
+
+
+
+function LoginPage(){ // function block
+//Actionables
+fill method
+click method
+
+}
+
+LoginPage()
+
+---------------------------------------------------------------------
+
+In TypeScript (and JavaScript), true constructor overloading like in Java or C# does NOT exist ❌
+
+🔹 What is Constructor Overloading (Concept)
+
+Constructor overloading means:
+
+Having multiple constructors with different parameter lists in the same class.
+
+👉 Example in Java:
+
+Employee(String name)
+Employee(String name, String id)
+
+🔹 How TypeScript Handles It
+
+TypeScript supports constructor overloading using signatures + single implementation.
+
+You define multiple constructor signatures, but only one actual constructor.
+
+🔹 Modify Sample program with Overloading
+
+class Employee3 {
+
+    empName: string
+    empid: string
+
+    // Constructor overload signatures
+    constructor(name: string)
+    constructor(name: string, id: string)
+
+    // Single implementation
+    constructor(name: string, id?: string) {
+        console.log("Constructor called");
+
+        this.empName = name
+        this.empid = id ?? "DefaultID"  // fallback if id not provided
+    }
+
+    printEmployeeDeatils() {
+        console.log(`Employee name is ${this.empName}, id is ${this.empid}`);
+    }
+}
+
+// Usage
+const emp1 = new Employee3("Hari")
+emp1.printEmployeeDeatils()
+
+const emp2 = new Employee3("Ravi", "emp456")
+emp2.printEmployeeDeatils()
+
+🔹 Key Points (Important)
+❌ TypeScript does NOT support multiple constructors directly
+✅ Use constructor overload signatures
+✅ Use optional parameters (?) or union types
+✅ Handle logic inside a single constructor
+
+“TypeScript doesn’t support true constructor overloading like Java. Instead, we define multiple constructor signatures and implement a single constructor using optional parameters or conditions.”
+
+---------------------------------------------------------------------
+
+AccessModifiers:
+----------------
+
+1. public : can be accessed inside and outside of the class
+2. protected: can be accessed inside the class as well as the related class --> relationship--> inherit
+3. private: not accessible outisde the class --> give permission to access or to rewrite "get" and "set"
+4. readonly: constant/final --> cannot change the assigned value
+5. static: belongs to the class and not to the object --> can be accessed without creating the object of the class.
