@@ -1,0 +1,87 @@
+📑 **Agenda for Week 7 Day 3: OOPs in TypeScript
+🎯 [Focus: Mastering Object-Oriented Programming Concepts in TypeScript]
+
+📆 [31st Mar. Wednesday]
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Constructors
+
+Role of constructors in initializing objects.
+Examples: Using parameterized and default constructors.
+
+2. Access Modifiers
+
+Understanding public, private, and protected access modifiers.
+Examples: Controlling access to class properties and methods.
+
+
+🕡 Wrap Up / Q&A
+
+-----------------------------------------------------------------------------
+
+Constructor:
+
+Definition
+A constructor in TypeScript is a method named constructor() that runs once at the time of object creation and sets up the initial state of the object.
+Or a Special method to initialize the object
+
+"this" keyword definition in ts :
+
+In TypeScript, this refers to the current instance of the class or the object that invokes the method.
+
+
+*******************************************************************************************
+
+
+class LoginPage{
+
+//Properties:
+------------
+
+username = "democsr2"
+password = "crmsfa"
+
+//Method :
+
+fill(){ // Method block--> block of code to perform an action
+//Actionables
+fill method
+use the properties "username" and "password" to perform the action to fill the login form
+}
+
+click(){
+//Actionables
+click method
+}
+}
+
+
+const lp = new LoginPage() // ✔️ Memory is allocated //syntax to create an object(reference/ instance/copy) for a class to call the methods(actionable blocks) inside the class 
+lp.fill()
+lp.click()
+
+class WelcomePage{
+click(){
+//Actionables
+click method
+}
+}
+
+
+
+
+function LoginPage(){ // function block
+//Actionables
+fill method
+click method
+
+}
+
+LoginPage()
+
+---------------------------------------------------------------------
+
