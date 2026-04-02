@@ -1,0 +1,228 @@
+📑 Agenda for Week 07 Day 04: OOPS in TypeScript to build POM 
+🎯 Focus: Mastering Object-Oriented Programming Concepts in TypeScript]
+
+
+📆 02nd April, Thursday
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Access Modifiers
+
+Understanding public, private, and protected access modifiers.
+Examples: Controlling access to class properties and methods.
+
+2. POM (Page Object Model)
+Design pattern to enhance test maintainability and reusability.
+Examples: Creating page classes and using them in test cases.
+
+
+
+
+AccessModifiers:
+----------------
+
+1. public : can be accessed inside and outside of the class
+2. protected: can be accessed inside the class as well as the related class --> relationship--> inherit
+3. private: not accessible outisde the class --> give permission to access or to rewrite "get" and "set"
+4. readonly: constant/final --> cannot change the assigned value
+5. static: belongs to the class and not to the object --> can be accessed without creating the object of the class.
+
+🔹 When do we use static in a TypeScript framework?
+
+We use static when the data or behavior is:
+
+✅ Common for the entire framework
+✅ Does NOT depend on object state
+✅ Utility / helper / configuration
+✅ Shared across tests, pages, or services
+
+1️⃣ Static for Constants & Configuration
+📌 Use case
+
+URLs
+Timeouts
+Environment names
+Browser types
+
+class Config {
+  static BASE_URL = "https://leaftaps.com";
+  static TIMEOUT = 5000;
+}
+
+Usage (no object needed)
+await page.goto(Config.BASE_URL);
+
+
+✔ Single source of truth
+✔ Easy to maintain
+
+*****************************************************************************************
+About super keyword :
+
+### `super` keyword in TypeScript — Simple & Clear Definition
+
+In **TypeScript (and JavaScript)**, the **`super` keyword** is used in a **child (derived) class** to **access the parent (base) class**.
+
+It is mainly used for **two purposes**:
+
+---
+
+## 1️⃣ Calling the Parent Class Constructor
+
+When a class **extends** another class, the child class **must call `super()`** before using `this`.
+
+### ✅ Definition
+
+> **`super()` calls the constructor of the parent class.**
+
+### Example
+
+```ts
+class LoginPage {
+  username: string;
+
+  constructor(username: string) {
+    this.username = username;
+  }
+}
+
+class DashboardPage extends LoginPage {
+  role: string;
+
+  constructor(username: string, role: string) {
+    super(username); // calls parent constructor
+    this.role = role;
+  }
+}
+
+const dp = new DashboardPage("admin", "manager");
+```
+
+📌 **Important rule**
+👉 `super()` **must be the first statement** in the child constructor.
+
+---
+
+## 2️⃣ Accessing Parent Class Methods or Properties
+
+### ✅ Definition
+
+> **`super.methodName()` is used to call a method from the parent class.**
+
+
+---
+
+## When Do We Use `super`? (Real-Time Use Case)
+
+Since we work with **Playwright + Page Object Model**, this is very common 👇
+
+```ts
+class BasePage {
+  protected page;
+
+  constructor(page) {
+    this.page = page;
+  }
+
+  async click(locator: string) {
+    await this.page.click(locator);
+  }
+}
+---------------------------------------------
+class LoginPage extends BasePage {
+  constructor(page) {
+    super(page); // pass page to BasePage
+  }
+
+  async login() {
+    await this.page.click("#login");
+  }
+}
+```
+
+🔹 `super(page)` passes the Playwright `page` object to the base class
+🔹 Avoids duplicate code
+🔹 Improves framework design
+
+---
+
+## Definition
+
+> **The `super` keyword in TypeScript is used to call the parent class constructor and access parent class methods or properties from a child class.**
+
+-------------------------------------------------------------------------------------
+
+faker library installation :
+
+npm install @faker-js/faker
+
+
+
+
+
+function sample(){
+
+console.log("Hello")
+
+}
+
+sample()
+
+-----------------------------------------------------------------------------------------------
+
+⿢Inheritance
+Exploring the concept of inheritance for code reuse.
+Examples: Implementing single and multilevel inheritance.
+
+--------------------------
+
+Inheritance :
+
+1. Single Inheritance :
+When a class inherits another class
+
+classA{} // 01-accessModifiers.ts --> Base class
+classB extends A{} // 04-accessModifiersPro.ts extends 03-accessModifiers.ts
+
+2. Multilevel Inheritance :
+When a class inherits another class which is already inherited from another class
+
+class A{}
+
+class B extends A{}
+class C extends B{}
+
+3. Hierarchical inheritance 
+ When multiple classes inherits a single class
+
+class A{} // Super class
+
+class B extends A{}
+class C extends A{}
+
+4. Hybrid Inheritance
+A combination of two or more types of inheritnace (e.x : multilevel and Hierarchical)
+
+
+5.Multiple Inheritance
+When a derived class inherits more than one parent class
+
+Typescript does not support multiple inheritnace using classes.
+Can be achieved through interface.
+
+-----
+
+Page Object Model :
+
+POM means:
+
+Each web page (or module) of your application is represented by a separate class,
+and that class contains locators and methods that act on that page.
+
+
+
+Loginpage --> WelcomePage --> HomePage --> LeadPage --> CreateLeadPage --> VerifyLead
+                                      ---> AccountPage --> CreateAccountPage -->VerifyAccount
