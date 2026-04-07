@@ -1,0 +1,22 @@
+📑 Agenda for Week 8 Day 2: Abstraction, Interface in POM and Playwright Advanced Features
+🎯 Focus: Mastering POM using OOPS concept and learning advanced playwright features.
+
+📆 07th April, Tuesday
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Abstraction and Interface
+Using abstract classes and methods to define templates.
+Implementing the same in POM.
+Examples: Designing pawait page.getByRole('button', { name: 'Go', exact: true }).click();artially implemented base classes.
+ 
+
+🕡 Wrap Up / Q\&A
+
+📝 Keep your physical notebook and pen handy to sketch out ideas and test workflows!
+
+*******************************************************************************************
+
