@@ -1,0 +1,169 @@
+📑 Agenda for Week 8 Day 3: Custom Fixture in POM and Playwright AI Integration (MCP&Agents)
+🎯 Focus: Apply custom fixture in POM and Use Playwright Agents.
+
+📆 08th April, Wednesday
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+1. Custom Fixture
+Creating reusable test setup using custom fixtures.
+Examples: Injecting test data, context, or utilities
+
+2. Playwright AI Integration (MCP&Agents) 
+
+
+
+
+
+
+
+--------------------
+What is a Fixture in Playwright?
+
+A fixture is like a setup helper that prepares something your test needs before it runs.
+
+👉 Instead of creating objects manually in every test, fixtures do it once and inject them automatically.
+
+🔍 Step by Step Explanation
+1️⃣ Import Base Test
+import { test as baseT } from "@playwright/test";
+
+👉 You are importing Playwright’s default test and renaming it to baseT.
+
+Why?
+Because you are going to extend it with your own fixtures.
+
+2️⃣ Import Page Object
+import { LoginPage } from "../pages/01-login";
+
+👉 This is your Page Object Model (POM) class for login.
+
+3️⃣ Define Fixture Type
+type myFixtures = {
+    loginfix : LoginPage
+}
+
+👉 This tells TypeScript:
+
+"My fixture will provide something called loginfix, and it will be of type LoginPage."
+
+4️⃣ Extend Base Test
+export const test1 = baseT.extend<myFixtures>({
+
+👉 You are creating a new custom test object (test1) that includes your fixture.
+
+Think of it like:
+
+"I’m adding extra powers (fixtures) to Playwright test."
+
+5️⃣ Create Fixture Logic
+loginfix : async ({ page }, use) => {
+
+👉 This is the actual fixture definition.
+
+{ page } → Playwright automatically gives you a browser page
+use → This is how you pass your fixture to the test
+6️⃣ Create Page Object
+const lop = new LoginPage(page)
+
+👉 You are creating your LoginPage object using Playwright's page.
+
+7️⃣ Provide Fixture to Test
+await use(lop)
+
+👉 This line is VERY IMPORTANT
+
+It means:
+
+"Hey test, here is your loginfix object. Use it!"
+
+🎯 How This Helps in Tests
+
+Instead of writing this in every test:
+
+test('login test', async ({ page }) => {
+    const login = new LoginPage(page)
+    await login.login()
+})
+
+👉 You can now write:
+
+test1('login test', async ({ loginfix }) => {
+    await loginfix.login()
+})
+🚀 Simple Real-Life Analogy
+
+Think of fixture like:
+
+🧑‍🍳 "Chef preparing ingredients before cooking"
+
+You (test) don’t need to chop vegetables every time
+Fixture prepares everything and gives it ready to you
+⚡ Key Benefits
+
+✔ Avoids duplicate code
+✔ Keeps tests clean
+✔ Improves maintainability
+✔ Makes tests more readable
+
+🧩 Final One-Line Summary
+
+👉 A fixture in Playwright is a reusable setup that automatically provides objects (like page or POMs) to your test.
+
+
+-------------------------------------------
+
+
+How to use playwright locator :
+
+username: () => this.lppage.getByRole(...)
+username → 🗝️ key
+() => this.lppage.getByRole(...) → 📦 value (function)
+⚡ Important Insight
+
+Here the value is not a direct locator, it’s a function returning a locator
+
+👉 So it's:
+
+key → function → returns locator
+
+🧪 Why function instead of direct value?
+
+Instead of:
+
+username: this.lppage.getByRole(...)
+
+You used:
+
+username: () => this.lppage.getByRole(...)
+
+👉 This is called lazy evaluation
+
+Benefits:
+Locator is created only when needed
+Avoids stale element issues
+Keeps it reusable and clean
+🎯 How you use it
+await this.selectors.username().fill("admin")
+
+👉 Notice the () → because it’s a function
+
+🧩 Simple analogy
+const obj = {
+    value: 10,
+    getValue: () => 10
+}
+value → direct value
+getValue → function returning value
+
+👉 Your selectors follow the second pattern
+
+🚀 One-line summary
+
+Yes, it's key-value — where value is a function that returns a locator.
+
+
+-------------------------------------------
