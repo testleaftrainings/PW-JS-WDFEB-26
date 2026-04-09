@@ -1,0 +1,178 @@
+📑 Agenda for Week 8 Day 4: GitHub Actions and Playwright Framework Walkthrough
+
+📆 09th April, Thursday
+
+🕝 Session Highlights
+
+⿡ Recap
+Quick review of previous learnings.
+
+
+### 1. GitHub Actions (CI for Playwright)
+
+What is **CI** and why automation needs it
+Understanding **GitHub Actions** workflow
+Running Playwright tests on every:
+
+* Code push
+* Pull request
+
+Key concepts:
+
+* YAML workflow
+* Runners
+* Artifacts (test reports, screenshots)
+
+Real-world pipeline:
+Developer → GitHub → Automated Tests → Report → Team
+
+2. Allure Report (Professional Test Reporting)
+
+What is **Allure Report** and why it is used
+How Playwright integrates with Allure
+Generating rich test execution reports
+Understanding:
+
+* Test status (pass/fail/skip)
+* Steps, screenshots, and attachments
+* Trends and execution history
+
+Real-world usage:
+
+* How teams analyze failures
+* How managers and clients read reports
+
+
+3. Playwright Framework Deep Dive
+
+
+
+Notes :
+
+Why Do We Need CI/CD?
+
+Using tools like GitHub Actions or Jenkins, teams automate testing and deployment.
+
+🔁 What is CI (Continuous Integration)?
+
+👉 CI = Automatically test your code whenever you push changes
+
+Without CI ❌
+Developer writes code
+Pushes to repo
+❗ Bugs go unnoticed
+❗ Build may break
+❗ Team finds issues late
+
+With CI ✅
+You push code
+Automatically:
+Build runs
+Tests run (Playwright, API tests, etc.)
+Immediate feedback 🔥
+💡 Example 
+
+You push:
+
+git push origin feature/login-test
+
+👉 CI will:
+
+Install dependencies
+Run Playwright tests
+Show result (pass/fail)
+
+---
+
+ What is CD (Continuous Deployment)?
+
+👉 CD = Automatically deploy code after it passes tests
+
+Without CD ❌
+Manual deployment
+Takes time
+Human errors
+“Works on my machine” problem 😅
+With CD ✅
+Code passes tests
+Automatically deployed to:
+Dev / QA / Prod environments
+
+
+⚡ Real Problems CI/CD Solves
+
+1. 🐞 Catch Bugs Early
+Instead of finding bugs in production
+You catch them during PR itself
+
+2. 🤝 Team Collaboration
+Multiple developers push code
+CI ensures everything still works together
+
+3. 🚀 Faster Releases
+No need for manual testing every time
+Everything is automated
+
+4. 🔄 Consistency
+Same steps every time:
+Install
+Test
+Build
+Deploy
+
+5. 😌 Confidence in Code
+If CI passes → safe to merge
+If CD runs → safe to release
+
+
+🔥 Real-Time Flow (With Your Workflow)
+
+Developer pushes code
+        ↓
+CI runs (GitHub Actions)
+        ↓
+Tests pass ✅
+        ↓
+PR approved => Team Lead merges to main
+        ↓
+Merge to main
+        ↓
+CD deploys automatically  => Dev/QA/Prod taken care by Devops team
+
+🎯 One-line Summary
+
+👉 CI = Test automatically
+👉 CD = Deploy automatically
+
+💥 Why This Matters 
+
+Playwright + Framework
+
+👉 CI/CD makes your framework industry-ready
+
+Example:
+
+Every PR → Playwright tests run automatically
+No broken tests enter main
+
+--------
+
+
+"page" fixture takes care of setup and teardown for each test, ensuring a clean state for every test case. 
+This means you don't have to worry about leftover data or state from previous tests affecting your current test. It also allows you to easily manage resources like browser instances, making your tests more efficient and reliable.
+
+
+custom fixtures => "page" fixture + login page
+
+test1("CUstom fixture example", async ({ page1}) => {
+#   // Use the "page" fixture to interact with the browser
+#   await page.goto("https://example.com/login");
+#   // Perform login steps using the page fixture
+#   await page.fill("#username", "testuser");
+#   await page.fill("#password", "password123");
+#   await page.click("#login-button");
+  
+  // Continue with your test assertions
+  const welcomeMessage = await page.textContent("#welcome-message");
+  expect(welcomeMessage).toBe("Welcome, testuser!");
+});
